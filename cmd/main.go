@@ -21,7 +21,10 @@ func main() {
 	// Register routes
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", h.HomePage)
-	mux.HandleFunc("/multi-select", h.MultiSelect)
+	
+	mux.HandleFunc("/multi-select", h.MultiSelectHandler)            // Handle main page
+	mux.HandleFunc("/multi-select/table/", h.MultiSelectHandler)     // Handle table updates
+
 	mux.HandleFunc("/external-api", h.ExternalApi)
 	mux.HandleFunc("/web-socket", h.WebSocket)
 

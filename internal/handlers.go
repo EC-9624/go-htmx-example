@@ -59,11 +59,6 @@ func (h *Handlers) HomePage(w http.ResponseWriter, r *http.Request) {
 	h.renderer.Render(w, r, "1-tabs-navigation.html", nil)
 }
 
-// MultiSelect handles the multi-select page
-func (h *Handlers) MultiSelect(w http.ResponseWriter, r *http.Request) {
-	h.renderer.Render(w, r, "2-multi-select.html", nil)
-}
-
 // ExternalApi handles the external API page
 func (h *Handlers) ExternalApi(w http.ResponseWriter, r *http.Request) {
 	h.renderer.Render(w, r, "3-external-api.html", nil)
