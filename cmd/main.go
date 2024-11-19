@@ -1,63 +1,38 @@
 package main
 
 import (
-	"html/template"
+	"log"
 	"net/http"
 	"path/filepath"
+
+	"go-htmx-example/internal"
 )
 
-
-func renderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data interface{}) {
-	tmplPath := filepath.Join("htmx", "templates", tmpl)
-	t, err := template.ParseFiles(
-		filepath.Join("htmx", "templates", "layout.html"),
-		tmplPath,
-	)
-	if err != nil {
-		http.Error(w, "Error rendering template: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	// Check if the request is an HTMX request
-	if r.Header.Get("HX-Request") == "true" {
-		// Render only the content block
-		if err := t.ExecuteTemplate(w, "content", data); err != nil {
-			http.Error(w, "Error executing content template: "+err.Error(), http.StatusInternalServerError)
-		}
-	} else {
-		// Render the full layout
-		if err := t.ExecuteTemplate(w, "layout", data); err != nil {
-			http.Error(w, "Error executing layout template: "+err.Error(), http.StatusInternalServerError)
-		}
-	}
-	
-}
-
-func homePageHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, r, "1-tabs-navigation.html", nil)
-}
-
-func multiSelectPageHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, r, "2-multi-select.html", nil)
-}
-
-func externalApiPageHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, r, "3-external-api.html", nil)
-}
-
-func webSocketPageHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, r, "4-web-socket.html", nil)
-}
-
 func main() {
-	http.HandleFunc("/", homePageHandler)
-	http.HandleFunc("/multi-select", multiSelectPageHandler)
-	http.HandleFunc("/external-api", externalApiPageHandler)
-	http.HandleFunc("/web-socket", webSocketPageHandler)
+	// Initialize template renderer
+	renderer := internal.NewTemplateRenderer(
+		filepath.Join("htmx", "templates"),
+		"layout.html",
+	)
 
+	// Initialize handlers
+	h := internal.NewHandlers(renderer)
 
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	// Register routes
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", h.HomePage)
+	mux.HandleFunc("/multi-select", h.MultiSelect)
+	mux.HandleFunc("/external-api", h.ExternalApi)
+	mux.HandleFunc("/web-socket", h.WebSocket)
 
-	println("Server running at http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	// Start server
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: mux,
+	}
+
+	log.Println("Server running at http://localhost:8080")
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatalf("Server failed to start: %v", err)
+	}
 }
