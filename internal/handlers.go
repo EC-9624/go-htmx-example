@@ -59,11 +59,6 @@ func (h *Handlers) HomePage(w http.ResponseWriter, r *http.Request) {
 	h.renderer.Render(w, r, "1-tabs-navigation.html", nil)
 }
 
-// ExternalApi handles the external API page
-func (h *Handlers) ExternalApi(w http.ResponseWriter, r *http.Request) {
-	h.renderer.Render(w, r, "3-external-api.html", nil)
-}
-
 // WebSocket handles the WebSocket page
 func (h *Handlers) WebSocket(w http.ResponseWriter, r *http.Request) {
 	h.renderer.Render(w, r, "4-web-socket.html", nil)

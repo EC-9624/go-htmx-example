@@ -58,15 +58,10 @@ var currentState = MultiSelectPageData{
 	People:           defaultPeople,
 }
 
-// MultiSelectHandler handles both GET and POST requests for the multi-select page
+// Handle GET request - show the initial page
 func (h *Handlers) MultiSelectHandler(w http.ResponseWriter, r *http.Request) {
-	// Handle POST requests for toggling fields
-	// if r.Method == http.MethodPost {
-	// 	h.handleMultiSelectToggle(w, r)
-	// 	return
-	// }
-
-	// Handle GET request - show the initial page
+	
+	
 	h.renderer.Render(w, r, "2-multi-select.html", currentState)
 }
 

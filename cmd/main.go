@@ -25,7 +25,9 @@ func main() {
 	mux.HandleFunc("/multi-select", h.MultiSelectHandler)            // Handle main page
 	mux.HandleFunc("/multi-select/table/", h.HandleMultiSelectToggle)     // Handle table updates
 
-	mux.HandleFunc("/external-api", h.ExternalApi)
+	mux.HandleFunc("/external-api", h.ExternalApiHandler)
+	mux.HandleFunc("/poke", h.HandlePokeRequest)
+
 
 	mux.HandleFunc("/web-socket", h.WebSocket)
 
