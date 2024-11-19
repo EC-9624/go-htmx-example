@@ -23,9 +23,10 @@ func main() {
 	mux.HandleFunc("/", h.HomePage)
 	
 	mux.HandleFunc("/multi-select", h.MultiSelectHandler)            // Handle main page
-	mux.HandleFunc("/multi-select/table/", h.MultiSelectHandler)     // Handle table updates
+	mux.HandleFunc("/multi-select/table/", h.HandleMultiSelectToggle)     // Handle table updates
 
 	mux.HandleFunc("/external-api", h.ExternalApi)
+
 	mux.HandleFunc("/web-socket", h.WebSocket)
 
 	// Start server

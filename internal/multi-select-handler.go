@@ -61,17 +61,17 @@ var currentState = MultiSelectPageData{
 // MultiSelectHandler handles both GET and POST requests for the multi-select page
 func (h *Handlers) MultiSelectHandler(w http.ResponseWriter, r *http.Request) {
 	// Handle POST requests for toggling fields
-	if r.Method == http.MethodPost {
-		h.handleMultiSelectToggle(w, r)
-		return
-	}
+	// if r.Method == http.MethodPost {
+	// 	h.handleMultiSelectToggle(w, r)
+	// 	return
+	// }
 
 	// Handle GET request - show the initial page
 	h.renderer.Render(w, r, "2-multi-select.html", currentState)
 }
 
 // handleMultiSelectToggle processes the POST requests for toggling fields
-func (h *Handlers) handleMultiSelectToggle(w http.ResponseWriter, r *http.Request) {
+func (h *Handlers) HandleMultiSelectToggle(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 	if len(parts) < 5 {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
