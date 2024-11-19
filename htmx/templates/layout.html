@@ -17,7 +17,7 @@
         <nav class=" bg-gray-800">
             <div class=" mx-auto max-w-7xl px-4">
                 <div class="flex h-16 items-center justify-between">
-                    <div class="flex items-center">
+                    <div class="flex items-center gap-6">
                         <div class="flex-shrink-0">
                             <img class="h-12 w-12"
                                 src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.3c5441fc7a190fb1800d4a5c7f07ba4b1345a9c8.svg"
@@ -25,13 +25,14 @@
                         </div>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
-                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    href="/home" hx-get="/home" hx-target="#content" hx-swap="innerHTML">Home</a>
-                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    href="/about" hx-get="/about" hx-target="#content" hx-swap="innerHTML">About</a>
-                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    href="/contact" hx-get="/contact" hx-target="#content"
-                                    hx-swap="innerHTML">Contact</a>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
+                                    hx-get="/" hx-target="#content" hx-swap="innerHTML">Home</a>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
+                                    hx-get="/multi-select" hx-target="#content" hx-swap="innerHTML">Multi select</a>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
+                                    hx-get="/external-api" hx-target="#content" hx-swap="innerHTML">External Api</a>
+                                <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
+                                    hx-get="/web-socket" hx-target="#content" hx-swap="innerHTML">Web Socket</a>
                             </div>
                         </div>
                     </div>
@@ -40,7 +41,7 @@
         </nav>
     </header>
     <main id="content">
-        {{ block "content" . }}{{ end }}
+        {{ template "content" . }}
     </main>
 </body>
 
