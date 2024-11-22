@@ -32,7 +32,7 @@ func (tr *TemplateRenderer) Render(w http.ResponseWriter, r *http.Request, tmpl 
 	// Determine which template to execute based on HTMX request
 	templateName := "layout"
 	if r.Header.Get("HX-Request") == "true" {
-		templateName = "content"
+		templateName = "HX-Response"
 	}
 
 	if err := t.ExecuteTemplate(w, templateName, data); err != nil {
