@@ -11,6 +11,7 @@ type Count struct {
 var count = Count{Count: 0}
 
 func (h *Handlers) OobUpdate(w http.ResponseWriter, r *http.Request) {
+	
 	h.renderer.Render(w, r, "5-oob-update.html", count)
 }
 

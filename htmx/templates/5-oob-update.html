@@ -9,6 +9,7 @@
 
 <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
     <h1 id="counter">Count = {{.Count}}</h1>
-    <button hx-post="/count" hx-target="#counter" hx-swap="innerHTML">Add Count</button>
+    <button hx-post="/count" hx-target="#counter" hx-swap="innerHTML"
+        class=" bg-blue-500 text-white font-semibold py-2 px-2 rounded-md hover:bg-blue-600">Add Count</button>
 </div>
 {{ end }}
