@@ -57,7 +57,11 @@
                             <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
                                 hx-get="/web-socket" hx-target="#content" hx-swap="innerHTML">Web Socket</a>
                             <a class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
-                                hx-get="/oob-update" hx-target="#content" hx-swap="innerHTML">Oob update</a>
+                                id="oob-target" hx-get="/oob-update" hx-target="#content" hx-swap="innerHTML"
+                                hx-swap-oob="true">Oob
+                                update
+                                <span>{{.Count}}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
