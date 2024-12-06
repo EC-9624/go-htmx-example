@@ -63,3 +63,8 @@ func (h *Handlers) HomePage(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) WebSocket(w http.ResponseWriter, r *http.Request) {
 	h.renderer.Render(w, r, "4-web-socket.html", nil)
 }
+
+// WebSocket handles the WebSocket page
+func (h *Handlers) OobUpdate(w http.ResponseWriter, r *http.Request) {
+	h.renderer.Render(w, r, "5-oob-update.html", nil)
+}

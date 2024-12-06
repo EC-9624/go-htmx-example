@@ -34,6 +34,25 @@ func (s *WebSocketServer) SubscribeHandler(w http.ResponseWriter, r *http.Reques
 	}
 }
 
+func (s *WebSocketServer) SubscribeHandlerJson(w http.ResponseWriter, r *http.Request) {
+	// Add these headers
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+	// Handle preflight requests
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	err := s.subscribe(r.Context(), w, r)
+	if err != nil {
+		fmt.Println("Subscription error:", err)
+	}
+}
+
 func (s *WebSocketServer) addSubscriber(subscriber *Subscriber) {
 	s.SubscribersMu.Lock()
 	defer s.SubscribersMu.Unlock()
@@ -49,9 +68,30 @@ func (s *WebSocketServer) removeSubscriber(subscriber *Subscriber) {
 }
 
 func (s *WebSocketServer) subscribe(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
-	c, err := websocket.Accept(w, r, nil)
+	// Explicitly set CORS headers
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+	// Handle preflight requests
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return nil
+	}
+
+	// Configure WebSocket accept options to allow specific origins
+	c, err := websocket.Accept(w, r, &websocket.AcceptOptions{
+		InsecureSkipVerify: true,  // This will bypass strict origin checking
+		OriginPatterns: []string{
+			"http://localhost:5173",
+			"https://localhost:5173",
+			"localhost:5173",
+			"localhost:8080",
+		},
+	})
 	if err != nil {
-		return err
+		return fmt.Errorf("websocket accept error: %w", err)
 	}
 	defer c.Close(websocket.StatusInternalError, "Internal error")
 
@@ -69,9 +109,9 @@ func (s *WebSocketServer) subscribe(ctx context.Context, w http.ResponseWriter, 
 	for {
 		select {
 		case msg := <-subscriber.Msgs:
-			ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
-			defer cancel()
-			err := c.Write(ctx, websocket.MessageText, msg)
+			writeCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+			err := c.Write(writeCtx, websocket.MessageText, msg)
+			cancel() 
 			if err != nil {
 				return err
 			}
