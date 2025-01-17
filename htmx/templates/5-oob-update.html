@@ -1,0 +1,20 @@
+{{ define "HX-Response" }}
+<div class="bg-white shadow">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Out of bound Updates</h1>
+        <p class="text-gray-500 text-md">Example of how go+htmx do Out of bound Updates</p>
+    </div>
+</div>
+
+
+<div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+    <h1 id="counter">Count = {{.Count}}</h1>
+    <button hx-post="/count" hx-target="#counter" hx-swap="innerHTML"
+        class=" bg-blue-500 text-white font-semibold py-2 px-2 rounded-md hover:bg-blue-600">Add Count</button>
+
+    <button hx-post="/remove-count" hx-target="#counter" hx-swap="innerHTML"
+        class=" bg-red-500 text-white font-semibold py-2 px-2 rounded-md hover:bg-red-600">Remove Count</button>
+</div>
+
+
+{{ end }}

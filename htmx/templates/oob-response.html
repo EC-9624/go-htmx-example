@@ -1,0 +1,7 @@
+{{ define "HX-Response" }}
+<h1 id="counter">Count = {{.Count}}</h1>
+<span id="oob-span" hx-swap-oob="true"
+    class="inline-flex items-center px-2 text-white bg-red-500 rounded-full shadow-md">
+    {{.Count}}
+</span>
+{{ end }}

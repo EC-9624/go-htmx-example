@@ -1,8 +1,29 @@
-{{ define "content" }}
+{{ define "HX-Response" }}
 <div class="bg-white shadow">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">External Api</h1>
         <p class="text-gray-500 text-md">Example of how go+htmx work with external api</p>
+    </div>
+</div>
+<div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-20 items-center">
+        <h2 class="text-2xl font-semibold text-gray-800">Pokemon Cards</h2>
+        <div class="grid grid-cols-4 gap-5">
+
+            <!-- Replace here -->
+            <div class="w-48 bg-white shadow-lg border-2 border-gray-500 p-4 rounded-lg" id="targetDiv">
+                <form class="flex flex-col gap-4" hx-post="/poke" hx-swap="outerHTML" hx-target="#targetDiv">
+                    <h2 class="text-lg font-bold text-gray-900 text-center">Add more</h2>
+                    <input type="text" name="pokemon" placeholder="Type here"
+                        class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <button type="submit"
+                        class="w-full bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-600">
+                        Add
+                    </button>
+                </form>
+            </div>
+
+        </div>
     </div>
 </div>
 {{ end }}
