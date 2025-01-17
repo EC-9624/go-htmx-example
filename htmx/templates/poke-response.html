@@ -1,0 +1,34 @@
+{{define "poke-card" }}
+<article class="w-48 bg-white shadow-lg border-2 border-gray-500 p-4 rounded-lg">
+    <div class="flex flex-col items-center">
+        <img class="mb-4" alt="{{.Name}}" width="80" src="{{.Sprites.Other.Showdown.FrontDefault}}" />
+        <h2 class="text-lg font-bold text-gray-900">{{.Name}}</h2>
+    </div>
+    <hr class="my-4 border-gray-400" />
+    <ul class="text-gray-700 text-sm">
+        {{range .Types}}
+        <li><strong>Type:</strong> {{.TypeDetail.Name}}</li>
+        {{end}}
+        <li><strong>Height:</strong> {{.Height}}</li>
+        <li><strong>Weight:</strong> {{.Weight}}</li>
+    </ul>
+</article>
+{{ end }}
+
+{{define "poke-form"}}
+<div class="w-48 bg-white shadow-lg border-2 border-gray-500 p-4 rounded-lg" id="targetDiv">
+    <form class="flex flex-col gap-4" hx-post="/poke" hx-swap="outerHTML" hx-target="#targetDiv">
+        <h2 class="text-lg font-bold text-gray-900 text-center">Add more</h2>
+        <input type="text" name="pokemon" placeholder="Type here"
+            class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-600">
+            Add
+        </button>
+    </form>
+</div>
+{{end}}
+
+{{define "HX-Response"}}
+{{template "poke-card" .}}
+{{template "poke-form" .}}
+{{end}}
