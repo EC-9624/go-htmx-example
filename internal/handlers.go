@@ -20,7 +20,6 @@ func NewTemplateRenderer(templatesDir, layoutFile string) *TemplateRenderer {
 	}
 }
 
-// Render handles template rendering with HTMX support
 func (tr *TemplateRenderer) Render(w http.ResponseWriter, r *http.Request, tmpl string, data interface{}) {
 	tmplPath := filepath.Join(tr.TemplatesDir, tmpl)
 	t, err := template.ParseFiles(tr.LayoutPath, tmplPath)

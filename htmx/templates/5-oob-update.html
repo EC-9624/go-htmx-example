@@ -11,5 +11,10 @@
     <h1 id="counter">Count = {{.Count}}</h1>
     <button hx-post="/count" hx-target="#counter" hx-swap="innerHTML"
         class=" bg-blue-500 text-white font-semibold py-2 px-2 rounded-md hover:bg-blue-600">Add Count</button>
+
+    <button hx-post="/remove-count" hx-target="#counter" hx-swap="innerHTML"
+        class=" bg-red-500 text-white font-semibold py-2 px-2 rounded-md hover:bg-red-600">Remove Count</button>
 </div>
+
+
 {{ end }}

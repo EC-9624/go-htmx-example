@@ -1,6 +1,9 @@
 package internal
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
 // Count struct to hold the count variable
 type Count struct {
@@ -19,4 +22,19 @@ func (h *Handlers) AddCount(w http.ResponseWriter, r *http.Request) {
 
     count.Count++
 	h.renderer.Render(w, r, "oob-response.html", count)
+}
+
+func (h *Handlers) RemoveCount(w http.ResponseWriter, r *http.Request) {
+
+    count.Count--
+	h.renderer.Render(w, r, "oob-response.html", count)
+}
+
+// GET count on load
+func (h *Handlers) GetCount(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "text/html")
+    fmt.Fprintf(w, `<span id="oob-span" hx-get="/get-count" hx-trigger="load" hx-target="#oob-span" hx-swap="outerHTML"
+        class="inline-flex items-center px-2 text-white bg-red-500 rounded-full shadow-md">
+        %d
+    </span>`, count.Count)
 }
